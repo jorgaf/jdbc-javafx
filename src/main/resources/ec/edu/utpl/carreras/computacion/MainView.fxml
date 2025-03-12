@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.utpl.carreras.computacion.controller.AppointmentController">
+    <!-- TableView para mostrar las citas -->
+    <TableView fx:id="appointmentTable">
+        <columns>
+            <TableColumn fx:id="idColumn" text="ID" prefWidth="50"/>
+            <TableColumn fx:id="barberoColumn" text="Barbero" prefWidth="100"/>
+            <TableColumn fx:id="clienteColumn" text="Cliente" prefWidth="100"/>
+            <TableColumn fx:id="servicioColumn" text="Servicio" prefWidth="100"/>
+            <TableColumn fx:id="fechaHoraColumn" text="Fecha y Hora" prefWidth="150"/>
+            <TableColumn fx:id="estadoColumn" text="Estado" prefWidth="100"/>
+        </columns>
+    </TableView>
+
+    <!-- Formulario para agregar una nueva cita -->
+    <HBox spacing="10">
+        <TextField fx:id="barberoField" promptText="ID Barbero" />
+        <TextField fx:id="clienteField" promptText="ID Cliente" />
+        <TextField fx:id="servicioField" promptText="ID Servicio" />
+        <TextField fx:id="fechaHoraField" promptText="yyyy-MM-dd HH:mm:ss" />
+        <TextField fx:id="estadoField" promptText="Estado" />
+        <TextField fx:id="notasField" promptText="Notas" />
+        <Button text="Agregar Cita" onAction="#handleAddAppointment"/>
+    </HBox>
+</VBox>
