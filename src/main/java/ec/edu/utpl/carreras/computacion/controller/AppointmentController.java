@@ -18,11 +18,11 @@ public class AppointmentController {
     @FXML
     private TableColumn<Cita, Number> idColumn;
     @FXML
-    private TableColumn<Cita, Number> barberoColumn;
+    private TableColumn<Cita, String > barberoColumn;
     @FXML
-    private TableColumn<Cita, Number> clienteColumn;
+    private TableColumn<Cita, String> clienteColumn;
     @FXML
-    private TableColumn<Cita, Number> servicioColumn;
+    private TableColumn<Cita, String> servicioColumn;
     @FXML
     private TableColumn<Cita, String> fechaHoraColumn;
     @FXML
@@ -47,9 +47,9 @@ public class AppointmentController {
     public void initialize() {
         // Configurar columnas del TableView
         idColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty());
-        barberoColumn.setCellValueFactory(cellData -> cellData.getValue().barberoProperty());
-        clienteColumn.setCellValueFactory(cellData -> cellData.getValue().clienteProperty());
-        servicioColumn.setCellValueFactory(cellData -> cellData.getValue().servicioProperty());
+        barberoColumn.setCellValueFactory(cellData -> cellData.getValue().barberoNombreProperty());
+        clienteColumn.setCellValueFactory(cellData -> cellData.getValue().clienteNombrePrperty());
+        servicioColumn.setCellValueFactory(cellData -> cellData.getValue().servicioNombreProperty());
         fechaHoraColumn.setCellValueFactory(cellData -> cellData.getValue().fechaHoraProperty());
         estadoColumn.setCellValueFactory(cellData -> cellData.getValue().estadoProperty());
 
@@ -58,16 +58,29 @@ public class AppointmentController {
     }
 
     private void loadAppointmentsFromDB() {
+        String qry = """
+        SELECT c.id, c.barbero_id, b.nombre AS barbero_nombre,
+        c.cliente_id, cl.nombre AS cliente_nombre,
+        c.servicio_id, s.nombre AS servicio_nombre,
+        c.fecha_hora, c.estado, c.notas
+        FROM cita c
+        JOIN barbero b ON c.barbero_id = b.id
+        JOIN cliente cl ON c.cliente_id = cl.id
+        JOIN servicio s ON c.servicio_id = s.id;
+        """;
         try (Connection conn = DBConnection.getConnection();
              Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM cita")) {
+             ResultSet rs = stmt.executeQuery(qry)) {
 
             while (rs.next()) {
                 Cita cita = new Cita(
                         rs.getInt("id"),
                         rs.getInt("barbero_id"),
+                        rs.getString("barbero_nombre"),
                         rs.getInt("cliente_id"),
+                        rs.getString("cliente_nombre"),
                         rs.getInt("servicio_id"),
+                        rs.getString("servicio_nombre"),
                         rs.getTimestamp("fecha_hora").toLocalDateTime(),
                         rs.getString("estado"),
                         rs.getString("notas")
