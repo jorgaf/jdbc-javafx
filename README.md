@@ -15,3 +15,14 @@ El frontal (JavaFX) es básico y permite visualizar y crear citas. En esta prime
 citas se usa únicamente cuadros de texto para el ingreso de los identificadores del barbero, el cliente y el servicio. De igual forma en la visualización de citas, únicamente se muestran los identificadores.
 
 ¿Qué cambios se debería hacer para presentar los nombres y no los identificadores?
+
+Respuesta:
+- Se realizaron cambios en [Cita.java](src/main/java/ec/edu/utpl/carreras/computacion/model/Cita.java) agregando los atributos para el manejo de los nombres, un nuevo constructor y métodos *get* para esos nuevos atributos.
+- También se realizó un cambio en la consulta de la base de datos: modificar la consulta para obtener las citas, se usó *JOIN* para obtener los nombres del barbero, cliente y servicio (ver línea 61 clase [AppointmentController.java](src/main/java/ec/edu/utpl/carreras/computacion/controller/AppointmentController.java#L61)).
+- En [AppointmentController.java](src/main/java/ec/edu/utpl/carreras/computacion/controller/AppointmentController.java#L76) se modificó el método *loadAppointmentsFromDB* para que trabaje con los nuevos datos (nombres)
+
+Si bien estos cambios ayudan en la presentación, aún se usan cajas de texto para la creación de la cita.
+
+¿Qué cambios se debería realizar para crear una cita usando combos que muestren los nombres del barbero, cliente y servicio?
+
+
