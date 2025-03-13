@@ -1,7 +1,6 @@
 package ec.edu.utpl.carreras.computacion.controller;
 
-import ec.edu.utpl.carreras.computacion.model.Cita;
-import ec.edu.utpl.carreras.computacion.model.DBConnection;
+import ec.edu.utpl.carreras.computacion.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -10,6 +9,7 @@ import javafx.scene.control.*;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 public class AppointmentController {
 
@@ -29,13 +29,13 @@ public class AppointmentController {
     private TableColumn<Cita, String> estadoColumn;
 
     @FXML
-    private TextField barberoField;
+    private ComboBox<Barbero> barberoCombo;
     @FXML
-    private TextField clienteField;
+    private ComboBox<Cliente> clienteCombo;
     @FXML
-    private TextField servicioField;
+    private ComboBox<Servicio> servicioCombo;
     @FXML
-    private TextField fechaHoraField;
+    private DatePicker fechaHoraPicker;
     @FXML
     private TextField estadoField;
     @FXML
@@ -55,6 +55,81 @@ public class AppointmentController {
 
         // Cargar citas desde la base de datos
         loadAppointmentsFromDB();
+        loadBarberos();
+        loadClientes();
+        loadServicios();
+    }
+
+    private void loadBarberos() {
+        try(Connection conn = DBConnection.getConnection();
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM barbero")) {
+
+            ObservableList<Barbero> barberoList = FXCollections.observableArrayList();
+            while (rs.next()) {
+                Barbero b = new Barbero(
+                        rs.getInt("id"),
+                        rs.getString("nombre"),
+                        rs.getString("apellido"),
+                        rs.getString("telefono"),
+                        rs.getString("email")
+                );
+                barberoList.add(b);
+            }
+            barberoCombo.setItems(barberoList);
+
+        } catch(SQLException e) {
+            alert("Error", "Error al traer los barberos", Alert.AlertType.ERROR);
+            e.printStackTrace();
+        }
+    }
+
+    private void loadClientes() {
+        try(Connection conn = DBConnection.getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM cliente")) {
+
+            ObservableList<Cliente> clientes = FXCollections.observableArrayList();
+            while (rs.next()) {
+                Cliente c = new Cliente(
+                        rs.getInt("id"),
+                        rs.getString("nombre"),
+                        rs.getString("apellido"),
+                        rs.getString("telefono"),
+                        rs.getString("email")
+                );
+                clientes.add(c);
+            }
+            clienteCombo.setItems(clientes);
+
+        } catch(SQLException e) {
+            alert("Error", "Error al traer los barberos", Alert.AlertType.ERROR);
+            e.printStackTrace();
+        }
+    }
+
+    private void loadServicios() {
+        try(Connection conn = DBConnection.getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM servicio")) {
+
+            ObservableList<Servicio> servicios = FXCollections.observableArrayList();
+            while (rs.next()) {
+                Servicio s = new Servicio(
+                        rs.getInt("id"),
+                        rs.getString("nombre"),
+                        rs.getString("descripcion"),
+                        rs.getDouble("precio"),
+                        rs.getInt("duracion")
+                );
+                servicios.add(s);
+            }
+            servicioCombo.setItems(servicios);
+
+        } catch(SQLException e) {
+            alert("Error", "Error al traer los barberos", Alert.AlertType.ERROR);
+            e.printStackTrace();
+        }
     }
 
     private void loadAppointmentsFromDB() {
@@ -100,18 +175,24 @@ public class AppointmentController {
             String sql = "INSERT INTO cita (barbero_id, cliente_id, servicio_id, fecha_hora, estado, notas) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-            // Para simplificar, se asume que se ingresan los ID de barbero, cliente y servicio
-            int barberoId = Integer.parseInt(barberoField.getText());
-            int clienteId = Integer.parseInt(clienteField.getText());
-            int servicioId = Integer.parseInt(servicioField.getText());
+            // Se obtienen los objetos seleccionados de los ComboBox
+            Barbero barberoSelected = barberoCombo.getSelectionModel().getSelectedItem();
+            Cliente clienteSelected = clienteCombo.getSelectionModel().getSelectedItem();
+            Servicio servicioSelected = servicioCombo.getSelectionModel().getSelectedItem();
+
+            // Validar que se haya seleccionado un objeto en cada Combobox
+            if(Objects.isNull(barberoSelected) || Objects.isNull(clienteSelected) || Objects.isNull(servicioSelected)) {
+                alert("Error", "Debe seleccionar todos los campos", Alert.AlertType.ERROR);
+            }
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            LocalDateTime fechaHora = LocalDateTime.parse(fechaHoraField.getText(), formatter);
+            //LocalDateTime fechaHora = LocalDateTime.parse(fechaHoraPicker.getValue(), formatter);
+            LocalDateTime fechaHora = fechaHoraPicker.getValue().atStartOfDay();
             String estado = estadoField.getText();
             String notas = notasField.getText();
 
-            pstmt.setInt(1, barberoId);
-            pstmt.setInt(2, clienteId);
-            pstmt.setInt(3, servicioId);
+            pstmt.setInt(1, barberoSelected.getId());
+            pstmt.setInt(2, clienteSelected.getId());
+            pstmt.setInt(3, servicioSelected.getId());
             pstmt.setTimestamp(4, Timestamp.valueOf(fechaHora));
             pstmt.setString(5, estado);
             pstmt.setString(6, notas);
@@ -123,9 +204,13 @@ public class AppointmentController {
             try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     int newId = generatedKeys.getInt(1);
-                    Cita newCita = new Cita(newId, barberoId, clienteId, servicioId, fechaHora, estado, notas);
+                    Cita newCita = new Cita(newId,
+                            barberoSelected.getId(), barberoSelected.getNombre(),
+                            clienteSelected.getId(), clienteSelected.getNombre(),
+                            servicioSelected.getId(), servicioSelected.getNombre(),
+                            fechaHora, estado, notas);
                     appointmentList.add(newCita);
-                    alert("Cita creadoa", "La cita ha sido registrada correctamente", Alert.AlertType.CONFIRMATION);
+                    alert("Cita creada", "La cita ha sido registrada correctamente", Alert.AlertType.CONFIRMATION);
                 } else {
                     alert("Error", "Error al crear la cita", Alert.AlertType.ERROR);
                     throw new SQLException("Error al insertar la cita, no se obtuvo ID.");

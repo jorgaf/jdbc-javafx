@@ -18,11 +18,20 @@ citas se usa únicamente cuadros de texto para el ingreso de los identificadores
 
 Respuesta:
 - Se realizaron cambios en [Cita.java](src/main/java/ec/edu/utpl/carreras/computacion/model/Cita.java) agregando los atributos para el manejo de los nombres, un nuevo constructor y métodos *get* para esos nuevos atributos.
-- También se realizó un cambio en la consulta de la base de datos: modificar la consulta para obtener las citas, se usó *JOIN* para obtener los nombres del barbero, cliente y servicio (ver línea 61 clase [AppointmentController.java](src/main/java/ec/edu/utpl/carreras/computacion/controller/AppointmentController.java#L61)).
-- En [AppointmentController.java](src/main/java/ec/edu/utpl/carreras/computacion/controller/AppointmentController.java#L76) se modificó el método *loadAppointmentsFromDB* para que trabaje con los nuevos datos (nombres)
+- También se realizó un cambio en la consulta de la base de datos: modificar la consulta para obtener las citas, se usó *JOIN* para obtener los nombres del barbero, cliente y servicio (ver línea 61 clase [AppointmentController.java](src/main/java/ec/edu/utpl/carreras/computacion/controller/AppointmentController.java#L136)).
+- En [AppointmentController.java](src/main/java/ec/edu/utpl/carreras/computacion/controller/AppointmentController.java#L135) se modificó el método *loadAppointmentsFromDB* para que trabaje con los nuevos datos (nombres)
 
 Si bien estos cambios ayudan en la presentación, aún se usan cajas de texto para la creación de la cita, además, el ingreso de la fecha y hora de la reserva es complicado.
 
 ¿Qué cambios se debería realizar para crear una cita usando combobox (cajas de selección) que muestren los nombres del barbero, cliente y servicio? y ¿Cómo mejorar el ingreso de la fecha y hora de la reserva?
+
+Respuesta:
+Para realizar la implementación es necesario modificar varios archivos, pero a nivel de base de datos fue necesario:
+
+- Agregar consultas para traer los datos de todos los barberos, clientes y servicios. Revisar la clase [AppointmentController](src/main/java/ec.edu/utpl/carreras/computacion/controller/AppointmentController.java) y los métodos [loadBarberos](src/main/java/ec.edu/utpl/carreras/computacion/controller/AppointmentController.java#L63), [loadClientes](src/main/java/ec.edu/utpl/carreras/computacion/controller/AppointmentController.java#L87), [loadServicios](src/main/java/ec.edu/utpl/carreras/computacion/controller/AppointmentController.java#L111).
+- Para los cambios de la GUI se realizaron varios cambios en archivos como [MainView.fxml](src/main/resources/ec/edu/utpl/carreras/computacion/MainView.fxml) y [AppointmentController](src/main/java/ec.edu/utpl/carreras/computacion/controller/AppointmentController.java). Con el fin de reemplazar las cajas de texto por combos y agregar un control denominado DatePicker para seleccionar la fecha.
+- Además se agregó se sobreescribió el método toString de las clases: [Barbero](src/main/java/ec/edu/utpl/carreras/computacion/model/Barbero.java), [Cliente](src/main/java/ec/edu/utpl/carreras/computacion/model/Cliente.java) y [Servicio](src/main/java/ec/edu/utpl/carreras/computacion/model/Servicio.java).
+
+Si bien se ha conseguido mejorar el ingreso, aún queda pendiente la selección de la hora.
 
 

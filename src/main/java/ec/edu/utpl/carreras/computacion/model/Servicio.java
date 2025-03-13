@@ -26,4 +26,9 @@ public class Servicio {
     public void setPrecio(double precio) { this.precio = precio; }
     public int getDuracion() { return duracion; }
     public void setDuracion(int duracion) { this.duracion = duracion; }
+
+    @Override
+    public String toString() {
+        return  nombre  + " - " + precio;
+    }
 }
