@@ -21,8 +21,8 @@ Respuesta:
 - También se realizó un cambio en la consulta de la base de datos: modificar la consulta para obtener las citas, se usó *JOIN* para obtener los nombres del barbero, cliente y servicio (ver línea 61 clase [AppointmentController.java](src/main/java/ec/edu/utpl/carreras/computacion/controller/AppointmentController.java#L61)).
 - En [AppointmentController.java](src/main/java/ec/edu/utpl/carreras/computacion/controller/AppointmentController.java#L76) se modificó el método *loadAppointmentsFromDB* para que trabaje con los nuevos datos (nombres)
 
-Si bien estos cambios ayudan en la presentación, aún se usan cajas de texto para la creación de la cita.
+Si bien estos cambios ayudan en la presentación, aún se usan cajas de texto para la creación de la cita, además, el ingreso de la fecha y hora de la reserva es complicado.
 
-¿Qué cambios se debería realizar para crear una cita usando combos que muestren los nombres del barbero, cliente y servicio?
+¿Qué cambios se debería realizar para crear una cita usando combobox (cajas de selección) que muestren los nombres del barbero, cliente y servicio? y ¿Cómo mejorar el ingreso de la fecha y hora de la reserva?
 
 
