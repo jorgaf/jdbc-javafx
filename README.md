@@ -28,10 +28,12 @@ Si bien estos cambios ayudan en la presentación, aún se usan cajas de texto pa
 Respuesta:
 Para realizar la implementación es necesario modificar varios archivos, pero a nivel de base de datos fue necesario:
 
-- Agregar consultas para traer los datos de todos los barberos, clientes y servicios. Revisar la clase [AppointmentController](src/main/java/ec.edu/utpl/carreras/computacion/controller/AppointmentController.java) y los métodos [loadBarberos](src/main/java/ec.edu/utpl/carreras/computacion/controller/AppointmentController.java#L63), [loadClientes](src/main/java/ec.edu/utpl/carreras/computacion/controller/AppointmentController.java#L87), [loadServicios](src/main/java/ec.edu/utpl/carreras/computacion/controller/AppointmentController.java#L111).
-- Para los cambios de la GUI se realizaron varios cambios en archivos como [MainView.fxml](src/main/resources/ec/edu/utpl/carreras/computacion/MainView.fxml) y [AppointmentController](src/main/java/ec.edu/utpl/carreras/computacion/controller/AppointmentController.java). Con el fin de reemplazar las cajas de texto por combos y agregar un control denominado DatePicker para seleccionar la fecha.
+- Agregar consultas para traer los datos de todos los barberos, clientes y servicios. Revisar la clase [AppointmentController](src/main/java/ec/edu/utpl/carreras/computacion/controller/AppointmentController.java) y los métodos [loadBarberos](src/main/java/ec/edu/utpl/carreras/computacion/controller/AppointmentController.java#L63), [loadClientes](src/main/java/ec/edu/utpl/carreras/computacion/controller/AppointmentController.java#L87), [loadServicios](src/main/java/ec/edu/utpl/carreras/computacion/controller/AppointmentController.java#L111).
+- Para los cambios de la GUI se realizaron varios cambios en archivos como [MainView.fxml](src/main/resources/ec/edu/utpl/carreras/computacion/MainView.fxml) y [AppointmentController](src/main/java/ec/edu/utpl/carreras/computacion/controller/AppointmentController.java). Con el fin de reemplazar las cajas de texto por combos y agregar un control denominado DatePicker para seleccionar la fecha.
 - Además se agregó se sobreescribió el método toString de las clases: [Barbero](src/main/java/ec/edu/utpl/carreras/computacion/model/Barbero.java), [Cliente](src/main/java/ec/edu/utpl/carreras/computacion/model/Cliente.java) y [Servicio](src/main/java/ec/edu/utpl/carreras/computacion/model/Servicio.java).
 
 Si bien se ha conseguido mejorar el ingreso, aún queda pendiente la selección de la hora.
+
+La aplicación funciona y hace lo que tiene que hacer, pero, se puede mejorar. Para mejorar la aplicación se debe usar patrones de diseño. ¿Qué patrones se podría aplicar? (Recomendación: busque información sobre los patrones: Singleton y Repository).
 
 
