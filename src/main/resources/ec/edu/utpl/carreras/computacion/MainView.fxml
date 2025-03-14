@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
-<VBox spacing="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.utpl.carreras.computacion.controller.AppointmentController">
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" spacing="10" xmlns="http://javafx.com/javafx/11.0.1"
+      fx:controller="ec.edu.utpl.carreras.computacion.controller.AppointmentController">
     <!-- TableView para mostrar las citas -->
     <TableView fx:id="appointmentTable">
         <columns>
@@ -18,12 +19,12 @@
 
     <!-- Formulario para agregar una nueva cita -->
     <HBox spacing="10">
-        <ComboBox fx:id="barberoCombo" promptText="Seleccione barbero" />
-        <ComboBox fx:id="clienteCombo" promptText="Seleccione cliente" />
-        <ComboBox fx:id="servicioCombo" promptText="Seleccione servicio" />
-        <DatePicker fx:id="fechaHoraPicker" promptText="Seleccione fecha y hora" />
-        <TextField fx:id="estadoField" promptText="Estado" />
-        <TextField fx:id="notasField" promptText="Notas" />
+        <ComboBox fx:id="barberoCombo" promptText="Seleccione barbero"/>
+        <ComboBox fx:id="clienteCombo" promptText="Seleccione cliente"/>
+        <ComboBox fx:id="servicioCombo" promptText="Seleccione servicio"/>
+        <DatePicker fx:id="fechaHoraPicker" promptText="Seleccione fecha y hora"/>
+        <TextField fx:id="estadoField" promptText="Estado"/>
+        <TextField fx:id="notasField" promptText="Notas"/>
         <Button text="Agregar Cita" onAction="#handleAddAppointment"/>
     </HBox>
 </VBox>

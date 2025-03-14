@@ -9,8 +9,25 @@ public class DBConnection {
     private static final String URL = "jdbc:mysql://localhost:3306/barberia";
     private static final String USER = "root";
     private static final String PASSWORD = "r00t@123"; // Reemplaza con tu contraseña
+    private static DBConnection instance;
+    private final Connection connection;
 
-    public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASSWORD);
+    private DBConnection() throws SQLException {
+        try {
+            this.connection = DriverManager.getConnection(URL, USER, PASSWORD);
+        } catch (SQLException e) {
+            throw new SQLException("Error al conectar con la base de datos", e);
+        }
+    }
+
+    public static DBConnection getInstance() throws SQLException {
+        if (instance == null || instance.getConnection().isClosed()) {
+            instance = new DBConnection();
+        }
+        return instance;
+    }
+
+    public Connection getConnection() {
+        return connection;
     }
 }

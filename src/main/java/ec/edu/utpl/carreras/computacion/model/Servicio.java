@@ -16,19 +16,48 @@ public class Servicio {
     }
 
     // Getters y setters
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
-    public String getNombre() { return nombre; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
-    public String getDescripcion() { return descripcion; }
-    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
-    public double getPrecio() { return precio; }
-    public void setPrecio(double precio) { this.precio = precio; }
-    public int getDuracion() { return duracion; }
-    public void setDuracion(int duracion) { this.duracion = duracion; }
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
+    public int getDuracion() {
+        return duracion;
+    }
+
+    public void setDuracion(int duracion) {
+        this.duracion = duracion;
+    }
 
     @Override
     public String toString() {
-        return  nombre  + " - " + precio;
+        return nombre + " - " + precio;
     }
 }
