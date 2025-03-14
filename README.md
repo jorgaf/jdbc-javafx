@@ -77,4 +77,4 @@ Los cambios que se hicieron incluye:
       atributos: [CitaRepository](src/main/java/ec/edu/utpl/carreras/computacion/controller/AppointmentController.java#L47), [BarberoRepository](src/main/java/ec/edu/utpl/carreras/computacion/controller/AppointmentController.java#L48), [ClienteRepository](src/main/java/ec/edu/utpl/carreras/computacion/controller/AppointmentController.java#L49)
       y [ServicioRepository](src/main/java/ec/edu/utpl/carreras/computacion/controller/AppointmentController.java#L50)
 - En la clase [Cita](src/main/java/ec/edu/utpl/carreras/computacion/model/Cita.java) se agregó el
-  método [setId](src/main/java/ec/edu/utpl/carreras/computacion/model/Cita.java#L49)
+  método [setId](src/main/java/ec/edu/utpl/carreras/computacion/model/Cita.java#L53)
